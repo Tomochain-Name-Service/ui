@@ -43,7 +43,7 @@ Setup for the library is done by calling the `setupENS` function. It can be opti
 It will return an object with the registrar and ens object. The ens object will deal with name resolution, reverse records and dealing with the registry. The registrar object has functions to interact the permanent registrar, legacy auction registrar and test registrar (just on test net)
 
 ```js
-import { setupENS } from '@ensdomains/ui'
+import { setupENS } from '@tomochain-name-service/ui'
 
 window.addEventListener('load', async () => {
   const { registrar, ens } = await setupENS()
@@ -71,7 +71,7 @@ options (object): {
 #### Example
 
 ```js
-import { setupENS } from '@ensdomains/ui'
+import { setupENS } from '@tomochain-name-service/ui'
 
 window.addEventListener('load', async () => {
   const { ens, registrar } = await setupENS()
@@ -82,7 +82,7 @@ window.addEventListener('load', async () => {
 
 #### Arguments
 
-name (String): An ENS name (e.g: vitalik.eth)
+name (String): An ENS name (e.g: milad.tomo)
 
 #### Returns
 
@@ -91,7 +91,7 @@ owner (address): Ethereum address of the owner on the registry
 #### Example
 
 ```js
-const name = 'vitalik.eth'
+const name = 'milad.tomo'
 const owner = await ens.getOwner(name)
 // 0x123...
 ```
@@ -100,7 +100,7 @@ const owner = await ens.getOwner(name)
 
 #### Arguments
 
-name (String): An ENS name (e.g: vitalik.eth)
+name (String): An ENS name (e.g: milad.tomo)
 
 #### Returns
 
@@ -110,7 +110,7 @@ owner (address): Ethereum address of the resolver contract
 
 ```js
 import ens from 'ens'
-const owner = await ens.getResolver('vitalik.eth')
+const owner = await ens.getResolver('milad.tomo')
 // 0x123...
 ```
 
@@ -118,7 +118,7 @@ const owner = await ens.getResolver('vitalik.eth')
 
 #### Arguments
 
-name (String): An ENS name (e.g: vitalik.eth)
+name (String): An ENS name (e.g: milad.tomo)
 
 #### Returns
 
@@ -136,8 +136,8 @@ const ttl = await ens.getTTL('resolver.eth')
 
 #### Arguments
 
-labelHash (String): Sha3 hash of the label e.g vitalik (vitalik.eth)
-nodeHash (String): Namehash of the rest of the name (minus the label) e.g eth (vitalik.eth)
+labelHash (String): Sha3 hash of the label e.g vitalik (milad.tomo)
+nodeHash (String): Namehash of the rest of the name (minus the label) e.g eth (milad.tomo)
 
 #### Returns
 
@@ -155,8 +155,8 @@ const owner = await ens.getOwnerWithLabelHash(labelHash, nodeHash)
 
 #### Arguments
 
-labelHash (String): Hash of the label e.g vitalik (vitalik.eth)
-nodeHash (String): Hash of the rest of the name (minus the library) e.g eth (vitalik.eth)
+labelHash (String): Hash of the label e.g vitalik (milad.tomo)
+nodeHash (String): Hash of the rest of the name (minus the library) e.g eth (milad.tomo)
 
 #### Returns
 
@@ -175,7 +175,7 @@ This function will call the resolver to get the address, if it cannot find a res
 
 #### Arguments
 
-name (String): An ENS name (e.g: vitalik.eth)
+name (String): An ENS name (e.g: milad.tomo)
 
 #### Returns
 
@@ -184,7 +184,7 @@ address (address): An Ethereum address that was set on the resolver
 #### Example
 
 ```js
-const addr = await ens.getAddress('vitalik.eth')
+const addr = await ens.getAddress('milad.tomo')
 // 0x123...
 ```
 
@@ -194,7 +194,7 @@ This function will call the resolver to get the address based on name and coin t
 
 #### Arguments
 
-name (String): An ENS name (e.g: vitalik.eth)
+name (String): An ENS name (e.g: milad.tomo)
 key (String): CoinType (e.g: ETH, EOS, ETC, specified in [address-encoder](https://github.com/ensdomains/address-encoder#supported-cryptocurrencies))
 
 #### Returns
@@ -204,7 +204,7 @@ address (address): A blockchain address that was set on the resolver
 #### Example
 
 ```js
-const addr = await ens.getAddress('vitalik.eth', 'ETC')
+const addr = await ens.getAddress('milad.tomo', 'ETC')
 // 0x123...
 ```
 
@@ -214,7 +214,7 @@ This function will call the resolver to get the contentHash, if it cannot find a
 
 #### Arguments
 
-name (String): An ENS name (e.g: vitalik.eth)
+name (String): An ENS name (e.g: milad.tomo)
 
 #### Returns
 
@@ -223,7 +223,7 @@ contentHash (String): A content hash String for IPFS or swarm
 #### Example
 
 ```js
-const content = await ens.getContent('vitalik.eth')
+const content = await ens.getContent('milad.tomo')
 // ipfs://Qsxz...
 ```
 
@@ -243,7 +243,7 @@ value (String): A value
 #### Example
 
 ```js
-const name = await ens.getText('vitalik.eth', 'url')
+const name = await ens.getText('milad.tomo', 'url')
 // https://vitalik.ca/
 ```
 
@@ -263,7 +263,7 @@ name (String): An ENS name
 
 ```js
 const name = await ens.getName('0x123abc...')
-// vitalik.eth
+// milad.tomo
 ```
 
 ### `async function getSubdomains(): [Address]`
@@ -281,7 +281,7 @@ addresses (Array): An ENS name
 #### Example
 
 ```js
-const name = await ens.getSubdomains('vitalik.eth')
+const name = await ens.getSubdomains('milad.tomo')
 // ['0x123','0x123']
 ```
 
@@ -299,7 +299,7 @@ transaction (object): [Transaction Response Object](#transaction-response)
 #### Example
 
 ```js
-const tx = await ens.setOwner('vitalik.eth', '0x123abc...')
+const tx = await ens.setOwner('milad.tomo', '0x123abc...')
 console.log(tx.hash)
 // 0x123456...
 const receipt = await tx.wait() // Wait for transaction to be mined
@@ -322,7 +322,7 @@ transaction (object): [Transaction Response Object](#transaction-response)
 #### Example
 
 ```js
-const tx = await ens.setSubnodeOwner('sub.vitalik.eth', '0x123abc')
+const tx = await ens.setSubnodeOwner('sub.milad.tomo', '0x123abc')
 console.log(tx.hash)
 // 0x123456...
 const receipt = await tx.wait() // Wait for transaction to be mined
@@ -337,7 +337,7 @@ Sets the record for a subnode. Can only be called by the controller of the paren
 
 name (String): An ENS name
 newOwner (String): An Ethereum address or contract
-resolver (Address): Resolver 
+resolver (Address): Resolver
 
 #### Returns
 
@@ -346,11 +346,7 @@ transaction (object): [Transaction Response Object](#transaction-response)
 #### Example
 
 ```js
-const tx = await ens.setSubnodeRecord(
-  'subnode.resolver.eth',
-  '0x134',
-  '0x123'
-)
+const tx = await ens.setSubnodeRecord('subnode.resolver.eth', '0x134', '0x123')
 
 console.log(tx.hash)
 // 0x123456...
@@ -374,7 +370,7 @@ transaction (object): [Transaction Response Object](#transaction-response)
 #### Example
 
 ```js
-const tx = await ens.setResolver('vitalik.eth', '0x123abc')
+const tx = await ens.setResolver('milad.tomo', '0x123abc')
 console.log(tx.hash)
 // 0x123456...
 const receipt = await tx.wait() // Wait for transaction to be mined
@@ -397,7 +393,7 @@ transaction (object): [Transaction Response Object](#transaction-response)
 #### Example
 
 ```js
-const tx = await ens.setAddress('vitalik.eth', '0x123abc')
+const tx = await ens.setAddress('milad.tomo', '0x123abc')
 console.log(tx.hash)
 // 0x123456...
 const receipt = await tx.wait() // Wait for transaction to be mined
@@ -422,7 +418,7 @@ transaction (object): [Transaction Response Object](#transaction-response)
 
 ```js
 const tx = await ens.setAddr(
-  'vitalik.eth',
+  'milad.tomo',
   'ETH',
   '0x0000000000000000000000000000000000012345'
 )
@@ -451,7 +447,7 @@ transaction (object): [Transaction Response Object](#transaction-response)
 #### Example
 
 ```js
-const tx = await ens.setContent('vitalik.eth', '0x123abc')
+const tx = await ens.setContent('milad.tomo', '0x123abc')
 console.log(tx.hash)
 // 0x123456...
 const receipt = await tx.wait() // Wait for transaction to be mined
@@ -474,13 +470,12 @@ transaction (object): [Transaction Response Object](#transaction-response)
 #### Example
 
 ```js
-const tx = await ens.setContent('vitalik.eth', '0x123abc')
+const tx = await ens.setContent('milad.tomo', '0x123abc')
 console.log(tx.hash)
 // 0x123456...
 const receipt = await tx.wait() // Wait for transaction to be mined
 // Transaction has been mined
 ```
-
 
 ### `async function setText(name, key, value): TransactionResponse`
 
@@ -489,8 +484,9 @@ Sets text metadata for node with the unique key key to value, overwriting anythi
 #### Arguments
 
 name (String): An ENS name
-key  (String): key
+key (String): key
 value (String): Value
+
 #### Returns
 
 transaction (object): [Transaction Response Object](#transaction-response)
@@ -498,7 +494,7 @@ transaction (object): [Transaction Response Object](#transaction-response)
 #### Example
 
 ```js
-const tx = await ens.setText('vitalik.eth', 'url', 'vitalik.ca')
+const tx = await ens.setText('milad.tomo', 'url', 'vitalik.ca')
 console.log(tx.hash)
 // 0x123456...
 const receipt = await tx.wait() // Wait for transaction to be mined
@@ -511,7 +507,7 @@ Can only be called by the controller of the name. This is a simplified version o
 
 #### Arguments
 
-name (String): An ENS name (sub.vitalik.eth)
+name (String): An ENS name (sub.milad.tomo)
 
 #### Returns
 
@@ -520,7 +516,7 @@ transaction (object): [Transaction Response Object](#transaction-response)
 #### Example
 
 ```js
-const tx = await ens.createSubdomain('sub', 'vitalik.eth')
+const tx = await ens.createSubdomain('sub', 'milad.tomo')
 console.log(tx.hash)
 // 0x123456...
 const receipt = await tx.wait() // Wait for transaction to be mined
@@ -533,7 +529,7 @@ Can only be called by the controller of the name. This function will set the con
 
 #### Arguments
 
-label (String): ENS Label e.g: sub (sub.vitalik.eth)
+label (String): ENS Label e.g: sub (sub.milad.tomo)
 name (String): An ENS name
 
 #### Returns
@@ -543,7 +539,7 @@ transaction (object): [Transaction Response Object](#transaction-response)
 #### Example
 
 ```js
-const tx = await ens.deleteSubdomain('sub', 'vitalik.eth')
+const tx = await ens.deleteSubdomain('sub', 'milad.tomo')
 console.log(tx.hash)
 // 0x123456...
 const receipt = await tx.wait() // Wait for transaction to be mined
@@ -565,7 +561,7 @@ transaction (object): [Transaction Response Object](#transaction-response)
 #### Example
 
 ```js
-const tx = await ens.claimAndSetReverseRecordName('vitalik.eth')
+const tx = await ens.claimAndSetReverseRecordName('milad.tomo')
 console.log(tx.hash)
 // 0x123456...
 const receipt = await tx.wait() // Wait for transaction to be mined
@@ -587,7 +583,7 @@ transaction (object): [Transaction Response Object](#transaction-response)
 #### Example
 
 ```js
-const tx = await ens.setReverseRecordName('vitalik.eth')
+const tx = await ens.setReverseRecordName('milad.tomo')
 console.log(tx.hash)
 // 0x123456...
 const receipt = await tx.wait() // Wait for transaction to be mined
@@ -619,11 +615,11 @@ DomainDetails (object): {
 #### Example
 
 ```js
-const domainDetails = await ens.getDomainDetails('vitalik.eth')
+const domainDetails = await ens.getDomainDetails('milad.tomo')
 console.log(domainDetails)
 /* 
   {
-    name: "vitalik.eth",
+    name: "milad.tomo",
     label: "vitalik",
     labelhash: "0x123456abc...",
     owner: "0x123abcdef...",
@@ -657,11 +653,11 @@ Subdomains (Array<Subdomain>): {
 #### Example
 
 ```js
-const subdomains = await ens.getSubdomains('vitalik.eth')
+const subdomains = await ens.getSubdomains('milad.tomo')
 console.log(subdomains)
 /* 
   [{
-    name: "vitalik.eth",
+    name: "milad.tomo",
     label: "vitalik",
     labelhash: "0x123456abc...",
     owner: "0x123abcdef...",

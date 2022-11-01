@@ -1,5 +1,5 @@
 {
-  "name": "@ensdomains/ui",
+  "name": "@tomochain-name-service/ui",
   "version": "3.4.5",
   "description": "UI components and reusable code",
   "main": "./dist/index.js",

@@ -1,6 +1,6 @@
 {
-  "name": "@tomons/ui",
-  "version": "3.4.2",
+  "name": "@tomochain-name-service/ui",
+  "version": "1.0.1",
   "description": "UI components and reusable code",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

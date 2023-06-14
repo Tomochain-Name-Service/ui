@@ -22,26 +22,18 @@ const uniq = (a) => a.filter((item, index) => a.indexOf(item) === index)
 async function getEtherScanAddr() {
   const networkId = await getNetworkId()
   switch (networkId) {
-    case 1:
-    case '1':
-      return 'https://etherscan.io/'
-    case 3:
-    case '3':
-      return 'https://ropsten.etherscan.io/'
-    case 4:
-    case '4':
-      return 'https://rinkeby.etherscan.io/'
-    default:
-      return 'https://etherscan.io/'
+    case 89:
+    case '89':
+      return 'https://testnet.tomoscan.io/'
   }
 }
 
 async function getEnsStartBlock() {
   const networkId = await getNetworkId()
   switch (networkId) {
-    case 1:
-    case '1':
-      return 3327417
+    case 89:
+    case '89':
+      return 33449074
     case 3:
     case '3':
       return 25409
@@ -84,7 +76,7 @@ function isLabelValid(name) {
 }
 
 const parseSearchTerm = (term, validTld) => {
-  console.log(term, validTld)
+  console.log({term, validTld});
   let regex = /[^.]+$/
 
   try {
@@ -97,7 +89,7 @@ const parseSearchTerm = (term, validTld) => {
     const termArray = term.split('.')
     const tld = term.match(regex) ? term.match(regex)[0] : ''
     if (validTld) {
-      if (tld === 'eth' && [...termArray[termArray.length - 2]].length < 3) {
+      if (tld === 'tomo' && [...termArray[termArray.length - 2]].length < 3) {
         // code-point length
         return 'short'
       }

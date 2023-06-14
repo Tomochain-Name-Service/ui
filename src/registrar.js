@@ -47,7 +47,7 @@ function checkArguments({
   if (!legacyAuctionRegistrarAddress)
     throw 'No legacy auction address given to Registrar class'
 
-  if (!ethAddress) throw 'No .eth address given to Registrar class'
+  if (!ethAddress) throw 'No .tomo address given to Registrar class'
 
   if (!provider) throw 'Provider is required for Registrar'
 
@@ -320,22 +320,23 @@ export default class Registrar {
     return price
   }
 
-  async getRentPriceAndPremium(name, duration, block="latest") {
+  async getRentPriceAndPremium(name, duration, block = "latest") {
     const permanentRegistrarController = this.permanentRegistrarController
-    let price = await permanentRegistrarController.rentPrice(name, duration, {blockTag:block} )
-    let premium = await permanentRegistrarController.rentPrice(name, 0, {blockTag:block} )
+    let price = await permanentRegistrarController.rentPrice(name, duration, { blockTag: block })
+    let premium = await permanentRegistrarController.rentPrice(name, 0, { blockTag: block })
     return {
       price, premium
     }
   }
 
   async getEthPrice() {
-    const oracleens = 'eth-usd.data.eth'
-    try{
+    /// todo: deploy oracle
+    const oracleens = 'eth-usd.data.tomo'
+    try {
       const contractAddress = await this.getAddress(oracleens)
       const oracle = await this.getOracle(contractAddress)
       return (await oracle.latestAnswer()).toNumber() / 100000000
-    }catch(e){
+    } catch (e) {
       console.warn(`Either ${oracleens} does not exist or Oracle is not throwing an error`, e)
     }
   }
@@ -375,7 +376,7 @@ export default class Registrar {
     const permanentRegistrarController =
       permanentRegistrarControllerWithoutSigner.connect(signer)
     const account = await getAccount()
-    const resolverAddr = await this.getAddress('resolver.eth')
+    const resolverAddr = await this.getAddress('resolver.tomo')
     if (parseInt(resolverAddr, 16) === 0) {
       return permanentRegistrarController.makeCommitment(name, owner, secret)
     } else {
@@ -421,7 +422,7 @@ export default class Registrar {
     const account = await getAccount()
     const price = await this.getRentPrice(label, duration)
     const priceWithBuffer = getBufferedPrice(price)
-    const resolverAddr = await this.getAddress('resolver.eth')
+    const resolverAddr = await this.getAddress('resolver.tomo')
     if (parseInt(resolverAddr, 16) === 0) {
       const gasLimit = await this.estimateGasLimit(() => {
         return permanentRegistrarController.estimateGas.register(
@@ -651,7 +652,7 @@ export default class Registrar {
     } else {
       // Only available for the new DNSRegistrar
       if (!isOld && owner === user) {
-        const resolverAddress = await this.getAddress('resolver.eth')
+        const resolverAddress = await this.getAddress('resolver.tomo')
         return registrar.proveAndClaimWithResolver(
           claim.encodedName,
           data,
@@ -681,7 +682,7 @@ export default class Registrar {
 
   async expiryTimes(label) {
     const provider = await getProvider()
-    const testAddress = await this.ENS.owner(namehash('test'))
+    const testAddress = await this.ENS.owner(namehash('tomo'))
     const TestRegistrar = await getTestRegistrarContract({
       address: testAddress,
       provider
@@ -695,33 +696,49 @@ export default class Registrar {
 }
 
 async function getEthResolver(ENS) {
-  const resolverAddr = await ENS.resolver(namehash('eth'))
+  console.log('in getEthResolver')
+  const resolverAddr = await ENS.resolver(namehash('tomo'))
+  const isExists = await ENS.recordExists(namehash('tomo'))
+  const owner = await ENS.owner(namehash('tomo'))
+
+  console.log({resolverAddr, isExists, owner});
   const provider = await getProvider()
-  return getResolverContract({ address: resolverAddr, provider })
+
+  const resolverContract =  getResolverContract({ address: resolverAddr, provider })
+  return resolverContract
 }
 
 export async function setupRegistrar(registryAddress) {
+  console.log('!!!start setup registrar!!!!');
   const provider = await getProvider()
+  console.log({ provider });
   const ENS = getENSContract({ address: registryAddress, provider })
+  console.log({ ENS });
   const Resolver = await getEthResolver(ENS)
+  console.log({ Resolver });
+  console.log({ tomoNameHash: namehash('tomo') });
+  let ethAddress = await ENS.owner(namehash('tomo'))
+  console.log({ ethAddress });
 
-  let ethAddress = await ENS.owner(namehash('eth'))
-
-  let controllerAddress = await Resolver.interfaceImplementer(
-    namehash('eth'),
-    permanentRegistrarInterfaceId
-  )
+  let controllerAddress = '0xCD7C727c4388B4acd036C7256425A9cc6c41D0F1'
+  console.log({ controllerAddress });
   let legacyAuctionRegistrarAddress = await Resolver.interfaceImplementer(
-    namehash('eth'),
+    namehash('tomo'),
     legacyRegistrarInterfaceId
   )
 
+  console.log({ legacyAuctionRegistrarAddress });
+
   let bulkRenewalAddress = await Resolver.interfaceImplementer(
-    namehash('eth'),
+    namehash('tomo'),
     bulkRenewalInterfaceId
   )
 
-  return new Registrar({
+  console.log({ bulkRenewalAddress });
+
+
+
+  const registrar = new Registrar({
     registryAddress,
     legacyAuctionRegistrarAddress,
     ethAddress,
@@ -729,4 +746,8 @@ export async function setupRegistrar(registryAddress) {
     bulkRenewalAddress,
     provider
   })
+
+  console.log({ registrar });
+
+  return registrar;
 }

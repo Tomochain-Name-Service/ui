@@ -41,17 +41,18 @@ function getLabelhash(label) {
 
 const contracts = {
   89: {
-    registry: '0x7861158d69B3591Dd89EB603352c99aA1B18b815'
+    registry: '0x5d938F93b2Ff9Bb490f523467A5bEA141064c0e0'
   }
 }
 
 export class ENS {
   constructor({ networkId, registryAddress, provider }) {
+    console.log({networkId, registryAddress, provider});
     this.contracts = contracts
     const hasRegistry =
       this.contracts[networkId] &&
       Object.keys(this.contracts[networkId]).includes('registry')
-
+    console.log({hasRegistry});
     if (!hasRegistry && !registryAddress) {
       throw new Error(`Unsupported network ${networkId}`)
     } else if (this.contracts[networkId] && !registryAddress) {

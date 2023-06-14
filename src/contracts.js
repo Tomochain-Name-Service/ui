@@ -9,12 +9,12 @@ import {
   ReverseRegistrar as reverseRegistrarContract,
   TestRegistrar as testRegistrarContract,
   AggregatorInterface as oracleContract
-} from '@ensdomains/ens-contracts'
+} from '@tomochain-name-service/contracts/'
 
-import { abi as oldResolverContract } from '@ensdomains/contracts/abis/ens-022/PublicResolver.json'
-import { abi as dnsRegistrarContractOld } from '@ensdomains/contracts/abis/dnsregistrar/DNSRegistrar.json'
+import { abi as oldResolverContract } from '@tomochain-name-service/contracts/contracts/abis/ens-022/PublicResolver.json'
+import { abi as dnsRegistrarContractOld } from '@tomochain-name-service/contracts/contracts/abis/dnsregistrar/DNSRegistrar.json'
 import { abi as legacyAuctionRegistrarContract } from '@ensdomains/contracts/abis/ens/HashRegistrar'
-import { abi as deedContract } from '@ensdomains/contracts/abis/ens/Deed'
+import { abi as deedContract } from '@tomochain-name-service/contracts/artifacts//abis/ens/Deed'
 
 function getReverseRegistrarContract({ address, provider }) {
   return new Contract(address, reverseRegistrarContract, provider)
@@ -29,6 +29,7 @@ function getOldResolverContract({ address, provider }) {
 }
 
 function getENSContract({ address, provider }) {
+  console.log({address, ensContract, provider});
   return new Contract(address, ensContract, provider)
 }
 

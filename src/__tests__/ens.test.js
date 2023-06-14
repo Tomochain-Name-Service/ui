@@ -72,7 +72,7 @@ describe('Blockchain tests', () => {
     })
 
     test('ens registry, resolver and reverse registrar deployed', async () => {
-      const eth = getNamehash('eth')
+      const eth = getNamehash('tomo')
       const ensContract = ens.getENSContractInstance()
       const ethOwner = await ensContract.owner(eth)
       expect(ethOwner).toBe(baseRegistrar)
@@ -86,19 +86,19 @@ describe('Blockchain tests', () => {
   describe('Registry', () => {
     test('getOwner returns owner', async () => {
       const accounts = await getAccounts()
-      const owner = await ens.getOwner('resolver.eth')
+      const owner = await ens.getOwner('resolver.tomo')
       expect(owner).toBe(accounts[0])
     })
 
     test('setSubnodeOwner sets new subnode owner', async () => {
       const ensContract = ens.getENSContractInstance()
-      const owner = await ensContract.owner(getNamehash('subnode.resolver.eth'))
+      const owner = await ensContract.owner(getNamehash('subnode.resolver.tomo'))
       const accounts = await getAccounts()
       expect(owner).toBe('0x0000000000000000000000000000000000000000')
-      const tx = await ens.setSubnodeOwner('subnode.resolver.eth', accounts[0])
+      const tx = await ens.setSubnodeOwner('subnode.resolver.tomo', accounts[0])
       await tx.wait()
       const newOwner = await ensContract.owner(
-        getNamehash('subnode.resolver.eth')
+        getNamehash('subnode.resolver.tomo')
       )
       expect(newOwner).toBe(accounts[0])
     })
@@ -107,13 +107,13 @@ describe('Blockchain tests', () => {
       const ensContract = ens.getENSContractInstance()
       const accounts = await getAccounts()
       const tx = await ens.setSubnodeRecord(
-        'subnode.resolver.eth',
+        'subnode.resolver.tomo',
         accounts[1],
         publicResolver,
         0
       )
       await tx.wait()
-      const hash = getNamehash('subnode.resolver.eth')
+      const hash = getNamehash('subnode.resolver.tomo')
       const newOwner = await ensContract.owner(hash)
       const newResolver = await ensContract.resolver(hash)
       const newTTL = await ensContract.ttl(hash)
@@ -124,18 +124,18 @@ describe('Blockchain tests', () => {
 
     test('setNewOwner sets new owner', async () => {
       const ensContract = ens.getENSContractInstance()
-      const hash = getNamehash('givethisaway.awesome.eth')
+      const hash = getNamehash('givethisaway.awesome.tomo')
       const owner = await ensContract.owner(hash)
       const accounts = await getAccounts()
       expect(owner).toBe('0x0000000000000000000000000000000000000000')
       const tx = await ens.setSubnodeOwner(
-        'givethisaway.awesome.eth',
+        'givethisaway.awesome.tomo',
         accounts[0]
       )
       await tx.wait()
       const owner2 = await ensContract.owner(hash)
       expect(owner2).toBe(accounts[0])
-      const tx2 = await ens.setOwner('givethisaway.awesome.eth', accounts[1])
+      const tx2 = await ens.setOwner('givethisaway.awesome.tomo', accounts[1])
       await tx2.wait()
       const newOwner = await ensContract.owner(hash)
       expect(newOwner).toBe(accounts[1])

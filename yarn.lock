@@ -2004,16 +2004,23 @@
     table "^6.8.0"
     undici "^5.14.0"
 
-"@tomochain-name-service/tns-contracts@^0.0.4":
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@tomochain-name-service/tns-contracts/-/tns-contracts-0.0.4.tgz#e493639c988fe0bbf30631f7b63caf22c15ea77d"
-  integrity sha512-hqYx+V0yCC0nO+uPpjcnRHlNjI1hQ3wazBFJXBCncxPngKvni8inDTyCWeoilUsWLsQ1HFyD5mUjn+b2H6S/Mw==
+"@tomochain-name-service/solsha1@0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@tomochain-name-service/solsha1/-/solsha1-0.0.5.tgz#a3f0c1641334924e944613376dd338d04ea9e700"
+  integrity sha512-WWaDTr47Dn0g5kICw2m16pz3ewmHPnq/qJPZH63cx3T7IN8LRdHKet8AgdBR1IhjpHh1KU3qg2qUWre414EOPQ==
+  dependencies:
+    hash-test-vectors "^1.3.2"
+
+"@tomochain-name-service/tns-contracts@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@tomochain-name-service/tns-contracts/-/tns-contracts-0.0.5.tgz#cf8ccda9fa60a1cc683b0b950edd6044594c0c90"
+  integrity sha512-wHeP82nrfgbCdhJN/yI6bsRU1oofOZPn4WE7hWxT6rXHPBj8SECqBI8KjWkoaOFfxyYni8VG32ixVjrJ0sNUFg==
   dependencies:
     "@ensdomains/buffer" "^0.0.13"
-    "@ensdomains/solsha1" "0.0.3"
     "@nomicfoundation/hardhat-verify" "^1.0.0"
     "@openzeppelin/contracts" "^4.1.0"
     "@tomochain-name-service/hardhat-verify" "^0.0.1-beta17"
+    "@tomochain-name-service/solsha1" "0.0.5"
     dns-packet "^5.3.0"
     envfile "^6.18.0"
 
@@ -11216,6 +11223,11 @@ typescript-logging@^1.0.0:
   integrity sha512-zp28ABme0m5q/nXabBaY9Hv/35N8lMH4FsvhpUO0zVi4vFs3uKlb5br2it61HAZF5k+U0aP6E67j0VD0IzXGpQ==
   dependencies:
     stacktrace-js "1.3.1"
+
+typescript@^5.1.3:
+  version "5.1.3"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.1.3.tgz#8d84219244a6b40b6fb2b33cc1c062f715b9e826"
+  integrity sha512-XH627E9vkeqhlZFQuL+UsyAXEnibT0kWR2FWONlr4sTjvxyJYnyefgrkyECLzM5NenmKzRAy2rR/OlYLA1HkZw==
 
 typewise-core@^1.2, typewise-core@^1.2.0:
   version "1.2.0"

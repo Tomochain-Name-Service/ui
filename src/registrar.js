@@ -36,13 +36,9 @@ const transferGasCost = 21000
 function checkArguments({
   registryAddress,
   ethAddress,
-  legacyAuctionRegistrarAddress,
   provider
 }) {
   if (!registryAddress) throw 'No registry address given to Registrar class'
-
-  if (!legacyAuctionRegistrarAddress)
-    throw 'No legacy auction address given to Registrar class'
 
   if (!ethAddress) throw 'No .tomo address given to Registrar class'
 
@@ -61,7 +57,6 @@ export default class Registrar {
   constructor({
     registryAddress,
     ethAddress,
-    legacyAuctionRegistrarAddress,
     controllerAddress,
     bulkRenewalAddress,
     provider
@@ -69,7 +64,6 @@ export default class Registrar {
     checkArguments({
       registryAddress,
       ethAddress,
-      legacyAuctionRegistrarAddress,
       provider
     })
 
@@ -662,14 +656,8 @@ export async function setupRegistrar(registryAddress) {
   let ethAddress = await ENS.owner(namehash('tomo'))
   console.log({ ethAddress });
 
-  let controllerAddress = '0xCD7C727c4388B4acd036C7256425A9cc6c41D0F1'
+  let controllerAddress = '0x6C3EF94eC8CE171B3b3993520e91Df9d4D06f812'
   console.log({ controllerAddress });
-  let legacyAuctionRegistrarAddress = await Resolver.interfaceImplementer(
-    namehash('tomo'),
-    legacyRegistrarInterfaceId
-  )
-
-  console.log({ legacyAuctionRegistrarAddress });
 
   let bulkRenewalAddress = await Resolver.interfaceImplementer(
     namehash('tomo'),
@@ -678,11 +666,8 @@ export async function setupRegistrar(registryAddress) {
 
   console.log({ bulkRenewalAddress });
 
-
-
   const registrar = new Registrar({
     registryAddress,
-    legacyAuctionRegistrarAddress,
     ethAddress,
     controllerAddress,
     bulkRenewalAddress,

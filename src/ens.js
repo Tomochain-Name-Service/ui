@@ -41,7 +41,7 @@ function getLabelhash(label) {
 
 const contracts = {
   89: {
-    registry: '0x5d938F93b2Ff9Bb490f523467A5bEA141064c0e0'
+    registry: '0x52B6B4cdF7c553b82cf21970416c7b1d9322a096'
   }
 }
 

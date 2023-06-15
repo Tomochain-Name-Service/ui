@@ -2,16 +2,12 @@ import { utils } from 'ethers'
 import { interfaces } from './constants/interfaces'
 import {
   getBulkRenewalContract,
-  getDeedContract,
   getDnsRegistrarContract,
   getENSContract,
-  getLegacyAuctionContract,
-  getOldDnsRegistrarContract,
   getPermanentRegistrarContract,
   getPermanentRegistrarControllerContract,
   getResolverContract,
   getTestRegistrarContract,
-  getOracleContract
 } from './contracts'
 import DNSRegistrarJS from './dnsregistrar'
 import { isEncodedLabelhash, labelhash } from './utils/labelhash'
@@ -23,6 +19,7 @@ import {
   getProvider,
   getSigner
 } from './web3'
+import fetch from 'node-fetch';
 
 const {
   legacyRegistrar: legacyRegistrarInterfaceId,
@@ -86,11 +83,6 @@ export default class Registrar {
         provider
       })
 
-    const legacyAuctionRegistrar = getLegacyAuctionContract({
-      address: legacyAuctionRegistrarAddress,
-      provider
-    })
-
     const bulkRenewal = getBulkRenewalContract({
       address: bulkRenewalAddress,
       provider
@@ -100,7 +92,6 @@ export default class Registrar {
 
     this.permanentRegistrar = permanentRegistrar
     this.permanentRegistrarController = permanentRegistrarController
-    this.legacyAuctionRegistrar = legacyAuctionRegistrar
     this.registryAddress = registryAddress
     this.bulkRenewal = bulkRenewal
     this.ENS = ENS
@@ -120,49 +111,6 @@ export default class Registrar {
     const resolverAddr = await this.ENS.resolver(hash)
     const Resolver = getResolverContract({ address: resolverAddr, provider })
     return Resolver.text(hash, key)
-  }
-
-  async getDeed(address) {
-    const provider = await getProvider()
-    return getDeedContract({ address, provider })
-  }
-
-  async getOracle(address) {
-    const provider = await getProvider()
-    return getOracleContract({ address, provider })
-  }
-
-  async getLegacyEntry(label) {
-    let legacyEntry
-    try {
-      const Registrar = this.legacyAuctionRegistrar
-      let deedOwner = '0x0'
-      const entry = await Registrar.entries(labelhash(label))
-      if (parseInt(entry[1], 16) !== 0) {
-        const deed = await this.getDeed(entry[1])
-        deedOwner = await deed.owner()
-      }
-      legacyEntry = {
-        deedOwner, // TODO: Display "Release" button if deedOwner is not 0x0
-        state: parseInt(entry[0]),
-        registrationDate: parseInt(entry[2]) * 1000,
-        revealDate: (parseInt(entry[2]) - 24 * 2 * 60 * 60) * 1000,
-        value: parseInt(entry[3]),
-        highestBid: parseInt(entry[4])
-      }
-    } catch (e) {
-      legacyEntry = {
-        deedOwner: '0x0',
-        state: 0,
-        registrationDate: 0,
-        revealDate: 0,
-        value: 0,
-        highestBid: 0,
-        expiryTime: 0,
-        error: e.message
-      }
-    }
-    return legacyEntry
   }
 
   async getPermanentEntry(label) {
@@ -211,7 +159,6 @@ export default class Registrar {
   async getEntry(label) {
     let [block, legacyEntry, permEntry] = await Promise.all([
       getBlock(),
-      this.getLegacyEntry(label),
       this.getPermanentEntry(label)
     ])
 
@@ -334,8 +281,11 @@ export default class Registrar {
     const oracleens = 'eth-usd.data.tomo'
     try {
       const contractAddress = await this.getAddress(oracleens)
-      const oracle = await this.getOracle(contractAddress)
-      return (await oracle.latestAnswer()).toNumber() / 100000000
+      // const oracle = await this.getOracle(contractAddress)
+      // TODO: read from our server
+      const response = await fetch('https://min-api.cryptocompare.com/data/price?fsym=TOMO&tsyms=USD')
+      const data = await response.json();
+      return Number.parseFloat(data.USD);
     } catch (e) {
       console.warn(`Either ${oracleens} does not exist or Oracle is not throwing an error`, e)
     }
@@ -548,25 +498,17 @@ export default class Registrar {
   }
 
   async selectDnsRegistrarContract({ parentOwner, provider }) {
-    let registrarContract = await getOldDnsRegistrarContract({
-      parentOwner,
-      provider
-    })
-    let isOld = false,
-      isNew = false
+      let registrarContract
+      let isOld = false
+      let isNew = false
     try {
-      isOld = await registrarContract['supportsInterface(bytes4)'](
-        dnssecClaimOldId
+      registrarContract = await getDnsRegistrarContract({
+        parentOwner,
+        provider
+      })
+      isNew = await registrarContract['supportsInterface(bytes4)'](
+        dnssecClaimNewId
       )
-      if (!isOld) {
-        registrarContract = await getDnsRegistrarContract({
-          parentOwner,
-          provider
-        })
-        isNew = await registrarContract['supportsInterface(bytes4)'](
-          dnssecClaimNewId
-        )
-      }
     } catch (e) {
       console.log({ e })
     }

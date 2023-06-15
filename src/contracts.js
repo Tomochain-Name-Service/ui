@@ -2,19 +2,13 @@ import { Contract } from 'ethers'
 import {
   BaseRegistrarImplementation as permanentRegistrarContract,
   BulkRenewal as bulkRenewalContract,
-  ENS as ensContract,
+  TomoNs as tnsContract,
   ETHRegistrarController as permanentRegistrarControllerContract,
   DNSRegistrar as dnsRegistrarContract,
   Resolver as resolverContract,
   ReverseRegistrar as reverseRegistrarContract,
   TestRegistrar as testRegistrarContract,
-  AggregatorInterface as oracleContract
-} from '@tomochain-name-service/contracts/'
-
-import { abi as oldResolverContract } from '@tomochain-name-service/contracts/contracts/abis/ens-022/PublicResolver.json'
-import { abi as dnsRegistrarContractOld } from '@tomochain-name-service/contracts/contracts/abis/dnsregistrar/DNSRegistrar.json'
-import { abi as legacyAuctionRegistrarContract } from '@ensdomains/contracts/abis/ens/HashRegistrar'
-import { abi as deedContract } from '@tomochain-name-service/contracts/artifacts//abis/ens/Deed'
+} from '@tomochain-name-service/tns-contracts/'
 
 function getReverseRegistrarContract({ address, provider }) {
   return new Contract(address, reverseRegistrarContract, provider)
@@ -24,21 +18,13 @@ function getResolverContract({ address, provider }) {
   return new Contract(address, resolverContract, provider)
 }
 
-function getOldResolverContract({ address, provider }) {
-  return new Contract(address, oldResolverContract, provider)
-}
-
 function getENSContract({ address, provider }) {
-  console.log({address, ensContract, provider});
-  return new Contract(address, ensContract, provider)
+  console.log({address, tnsContract, provider});
+  return new Contract(address, tnsContract, provider)
 }
 
 function getTestRegistrarContract({ address, provider }) {
   return new Contract(address, testRegistrarContract, provider)
-}
-
-function getOldDnsRegistrarContract({ parentOwner, provider }) {
-  return new Contract(parentOwner, dnsRegistrarContractOld, provider)
 }
 
 function getDnsRegistrarContract({ parentOwner, provider }) {
@@ -53,20 +39,8 @@ function getPermanentRegistrarControllerContract({ address, provider }) {
   return new Contract(address, permanentRegistrarControllerContract, provider)
 }
 
-function getDeedContract({ address, provider }) {
-  return new Contract(address, deedContract, provider)
-}
-
-function getLegacyAuctionContract({ address, provider }) {
-  return new Contract(address, legacyAuctionRegistrarContract, provider)
-}
-
 function getBulkRenewalContract({ address, provider }) {
   return new Contract(address, bulkRenewalContract, provider)
-}
-
-function getOracleContract({address, provider}){
-  return new Contract(address, oracleContract, provider)
 }
 
 export {
@@ -74,13 +48,8 @@ export {
   getReverseRegistrarContract,
   getENSContract,
   getResolverContract,
-  getOldResolverContract,
   getDnsRegistrarContract,
-  getOldDnsRegistrarContract,
   getPermanentRegistrarContract,
   getPermanentRegistrarControllerContract,
-  getLegacyAuctionContract,
-  getDeedContract,
   getBulkRenewalContract,
-  getOracleContract
 }

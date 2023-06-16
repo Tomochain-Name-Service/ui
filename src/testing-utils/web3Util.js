@@ -22,6 +22,7 @@ export async function setupWeb3({ Web3, provider }) {
   if (window && window.ethereum) {
     web3 = new Web3(window.ethereum)
     const id = `${await web3.eth.net.getId()}`
+    console.log({id})
     const networkProvider = getNetworkProviderUrl(id)
     web3Read = new Web3(
       networkProvider === 'private' ? window.ethereum : networkProvider
@@ -30,6 +31,7 @@ export async function setupWeb3({ Web3, provider }) {
   } else if (window.web3 && window.web3.currentProvider) {
     web3 = new Web3(window.web3.currentProvider)
     const id = `${await web3.eth.net.getId()}`
+    console.log({id})
     const networkProvider = getNetworkProviderUrl(id)
     web3Read = new Web3(
       networkProvider === 'private'
@@ -56,7 +58,7 @@ export async function setupWeb3({ Web3, provider }) {
           'No web3 instance injected. Falling back to cloud provider.'
         )
         readOnly = true
-        web3 = new Web3(getNetworkProviderUrl('1'))
+        web3 = new Web3(getNetworkProviderUrl('89'))
         web3Read = web3
         return web3
       }
@@ -88,14 +90,8 @@ export function isReadOnly() {
 
 function getNetworkProviderUrl(id) {
   switch (id) {
-    case '1':
-      return `https://mainnet.infura.io/v3/90f210707d3c450f847659dc9a3436ea`
-    case '3':
-      return `https://ropsten.infura.io/v3/90f210707d3c450f847659dc9a3436ea`
-    case '4':
-      return `https://rinkeby.infura.io/v3/90f210707d3c450f847659dc9a3436ea`
-    case '5':
-      return `https://goerli.infura.io/v3/90f210707d3c450f847659dc9a3436ea`
+    case '89':
+      return `https://rpc.testnet.tomochain.com`
     default:
       return 'private'
   }

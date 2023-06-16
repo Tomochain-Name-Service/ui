@@ -34,9 +34,6 @@ async function getEnsStartBlock() {
     case 89:
     case '89':
       return 33449074
-    case 3:
-    case '3':
-      return 25409
     default:
       return 0
   }

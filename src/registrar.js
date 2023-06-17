@@ -641,6 +641,7 @@ async function getEthResolver(ENS) {
   const provider = await getProvider()
 
   const resolverContract =  getResolverContract({ address: resolverAddr, provider })
+  console.log('DEBUUUUUG!',{resolverContract});
   return resolverContract
 }
 

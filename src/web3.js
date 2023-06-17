@@ -8,10 +8,13 @@ let requested = false
 let address
 
 function getJsonRpcProvider(providerOrUrl, option = 'any') {
+  console.log('ui', 'getJsonRpcProvider', {providerOrUrl, option});
   return new ethers.providers.JsonRpcProvider(providerOrUrl, option)
 }
 
 function getWeb3Provider(providerOrUrl, option = 'any') {
+  console.log('ui', 'getWeb3Provider', {providerOrUrl, option});
+
   return new ethers.providers.Web3Provider(providerOrUrl, option)
 }
 
@@ -22,6 +25,7 @@ export async function setupWeb3({
   enforceReload = false,
   ensAddress
 }) {
+  console.log('ui', 'setupWeb3',{customProvider});
   if (!customProvider) {
     throw new Error('Provider required to setup web3')
   }

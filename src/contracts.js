@@ -15,11 +15,12 @@ function getReverseRegistrarContract({ address, provider }) {
 }
 
 function getResolverContract({ address, provider }) {
+  console.log('getResolverContract', {address, provider, resolverContract});
   return new Contract(address, resolverContract, provider)
 }
 
 function getENSContract({ address, provider }) {
-  console.log({address, tnsContract, provider});
+  console.log('getENSContract', {address, tnsContract, provider});
   return new Contract(address, tnsContract, provider)
 }
 

@@ -33,7 +33,7 @@ async function getEnsStartBlock() {
   switch (networkId) {
     case 89:
     case '89':
-      return 33449074
+      return 39369250
     default:
       return 0
   }

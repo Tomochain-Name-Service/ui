@@ -1,7 +1,7 @@
 import { getProvider, setupWeb3, getNetworkId, getNetwork } from './web3'
 import { ENS } from './ens.js'
 import { setupRegistrar } from './registrar'
-export { utils, ethers } from 'ethers'
+export { utils, ethers } from '@tomochain-name-service/ethers'
 
 export async function setupENS({
   customProvider,

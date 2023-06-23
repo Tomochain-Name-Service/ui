@@ -1,4 +1,4 @@
-import { Contract } from 'ethers'
+import { Contract } from '@tomochain-name-service/ethers'
 import {
   BaseRegistrarImplementation as permanentRegistrarContract,
   BulkRenewal as bulkRenewalContract,

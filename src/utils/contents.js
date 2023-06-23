@@ -1,5 +1,5 @@
 import contentHash from '@ensdomains/content-hash'
-import { utils } from 'ethers'
+import { utils } from '@tomochain-name-service/ethers'
 const supportedCodecs = ['ipns-ns', 'ipfs-ns', 'swarm-ns', 'onion', 'onion3', 'skynet-ns', 'arweave-ns']
 
 function matchProtocol(text){

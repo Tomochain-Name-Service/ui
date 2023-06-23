@@ -1,5 +1,5 @@
 import { IFrameEthereumProvider } from '@ethvault/iframe-provider'
-import { ethers } from 'ethers'
+import { ethers } from '@tomochain-name-service/ethers'
 
 let provider
 let signer

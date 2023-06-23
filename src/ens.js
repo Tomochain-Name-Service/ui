@@ -1,6 +1,6 @@
 import { formatsByName, formatsByCoinType } from '@ensdomains/address-encoder'
 import { abi as ensContract } from '@ensdomains/contracts/abis/ens/ENS.json'
-import { utils, BigNumber } from 'ethers'
+import { utils, BigNumber } from '@tomochain-name-service/ethers'
 import {
   getENSContract,
   getResolverContract,

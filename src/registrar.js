@@ -1,4 +1,4 @@
-import { utils } from 'ethers'
+import { isAddress } from '@tomochain-name-service/ethers'
 import { interfaces } from './constants/interfaces'
 import {
   getBulkRenewalContract,
@@ -529,7 +529,7 @@ export default class Registrar {
         if (!dnsRegistrar.dnsOwner || parseInt(dnsRegistrar.dnsOwner) === 0) {
           // Empty
           dnsRegistrar.state = 8
-        } else if (!utils.isAddress(dnsRegistrar.dnsOwner)) {
+        } else if (!isAddress(dnsRegistrar.dnsOwner)) {
           // Invalid record
           dnsRegistrar.state = 4
         } else if (

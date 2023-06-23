@@ -272,9 +272,9 @@ export default class Registrar {
 
   async getEthPrice() {
     /// todo: deploy oracle
-    const oracleens = 'eth-usd.data.tomo'
+    // const oracleens = 'eth-usd.data.eth'
     try {
-      const contractAddress = await this.getAddress(oracleens)
+      // const contractAddress = await this.getAddress(oracleens)
       // const oracle = await this.getOracle(contractAddress)
       // TODO: read from our server
       const response = await fetch('https://min-api.cryptocompare.com/data/price?fsym=TOMO&tsyms=USD')
